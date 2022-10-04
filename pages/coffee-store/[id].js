@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import Link from "next/link";
-
 import styles from "../../styles/Coffee-store.module.css"
-
-import coffeeStoresData from "../../data/coffee-stores.json"
 import Head from "next/head";
 import Image from "next/image";
 import {fetchCoffeeStores} from "../../lib/coffee-stores";
@@ -12,7 +9,7 @@ import {StoreContext} from "../../store/store-context";
 import {isEmpty} from "../../utils";
 import useSWR from "swr";
 import {fetcher} from "../../fetchers/fetch";
-import {error} from "next/dist/build/output/log";
+
 
 const CoffeeStore = (initialProps) => {
     const router = useRouter();
@@ -57,6 +54,8 @@ const CoffeeStore = (initialProps) => {
                     address: address || ""
                 }),
             })
+
+            const dbCoffeeStore = await response.json();
         } catch (error) {
             console.error('Error creating coffeestore', error)
         }
@@ -85,7 +84,7 @@ const CoffeeStore = (initialProps) => {
     }
 
 
-    const {address, neighborhood, name, imgUrl} = coffeeStore;
+    const {address = "", neighborhood = "", name = "", imgUrl = ""} = coffeeStore;
 
     const handleUpvoteButton = async () => {
         try {
